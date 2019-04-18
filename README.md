@@ -3,6 +3,12 @@ An Arduino poject - control and use of a 2.8" (240320) TFT with resistive touch 
 
 This code contains functions to perform the following operations:
 - initialize and configure 2.8" TFT screen (controller: ILI9341)
-- display simple graphic functions 
+  - via SPI protocol (4 line, serial interface I)
+  - BL control
+- display simple graphic functions
+  - lines (includes color definition)
+  - rectangles (includes color definition)
+  - filled rectangles (includes color definition)
+  - text using basic 8x8 font (amplified width and height = 16x16)
 - read screen touches (via resisitive touch driver: TSC2046)
-- calibrates touch panel
+- calibrate touch panel 
