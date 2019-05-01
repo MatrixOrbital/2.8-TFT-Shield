@@ -1,3 +1,27 @@
+/*
+ * 
+ *   Copyright (c) 2019 Matrix Orbital, Corp. https://www.matrixorbital.com/
+ *   
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *   
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *   
+ *   
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ *   
+*/
 #ifndef __ILI9341SPI_H
 #define __ILI9341SPI_H
 
@@ -25,9 +49,6 @@ void ILI9341_WriteData16(uint16_t);
 void ILI9341_Write1Data(uint8_t Command, uint8_t Data1); // Write a single data byte parameter
 void ILI9341_Write2Data(uint8_t Command, uint8_t Data1, uint8_t Data2); // Writes two bytes of data
 void ILI9341_Write3Data(uint8_t Command, uint8_t Data1, uint8_t Data2, uint8_t Data3); // Writes three bytes of data
-//uint8_t t6963_readdata(void);
-//uint8_t t6963_waitonstatus(uint8_t mask);
-//void ILI9341_ExitStandby(void);
 void ILI9341_Reset(void);
 void ILI9341_Deselect(void);
 void ILI9341_Select(void);
@@ -37,7 +58,6 @@ void ILI9341_ReadDisplayID(uint8_t *);
 void ILI9341_ReadDisplayPowerMode(uint8_t *);
 void ILI9341_ReadDisplayMADCTL(uint8_t *);
 void ILI9341_ReadDisplayImageMode(uint8_t *);
-void ILI9341_ReadDisplaySignalMode(uint8_t *);
 void ILI9341_ColorSet(void);
 
 #ifdef __cplusplus

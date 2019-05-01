@@ -1,4 +1,27 @@
-#include <arduino.h>       
+/*
+ * 
+ *   Copyright (c) 2019 Matrix Orbital, Corp. https://www.matrixorbital.com/
+ *   
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *   
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *   
+ *   
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ *   
+*/
 #include <stdint.h>       // Find types like "uint8_t"
 #include <stdbool.h>      // Find type "bool"
 #include <SPI.h>          // Arduino SPI library
@@ -24,12 +47,6 @@ bool touched = false;
 void DrawSquares(void);
 void UpdateSquares(void);
 
-static void writeString(uint16_t x, uint16_t y, char* data)
-{  
-  for (int i = 0; i < strlen(data); i++)
-    displayChar((x+i)*16, y, data[i]); // 16 spaces in between start of new char  
-}
-
 void setup()
 {
   MyDelay(5000); 
@@ -52,8 +69,8 @@ void setup()
   char* goodCal = "Calibrated"; // xy = 3,150
   char* badCal = "NOT"; // xy = 2, 130
   char* restartCal = "restarting"; // xy = 2, 130
-  uint16_t i;
   bool res;
+  
   do 
   {    
     ClearScreen(0,0,0);
@@ -122,7 +139,7 @@ void loop()
         BlankingColor.Green -= 55;
         BlankingColor.Blue += (25 + (8 * random(16)));
         ChangeInterval = 0;
-      ClearScreen(0,0,0);
+        ClearScreen(0,0,0);
       }
       
       line(SS_x1, SS_y1, SS_x2, SS_y2, BlankingColor);
@@ -191,6 +208,12 @@ void loop()
       line(SS_x1, SS_y1, SS_x2, SS_y2, LineColor);      
     }
   }
+}
+
+static void writeString(uint16_t x, uint16_t y, char* data)
+{  
+  for (uint8_t i = 0; i < strlen(data); i++)
+    displayChar((x+i)*16, y, data[i]); // 16 spaces in between start of new char  
 }
 
 void UpdateSquares(void)

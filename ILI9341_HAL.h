@@ -1,13 +1,33 @@
+/*
+ * 
+ *   Copyright (c) 2019 Matrix Orbital, Corp. https://www.matrixorbital.com/
+ *   
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *   
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *   
+ *   
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ *   
+*/
 #ifndef __ILI9341HAL_H
 #define __ILI9341HAL_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-// HAL stands for Hardware Abstraction Layer.  This sits on top of _ARM functions which talk to the
-// actual chip as opposed these functions which have chip specific code, but do not actually touch it.
-// This layer MUST be consistently named so that it can be replaced without affecting higher level code.
 
 // Basic Color definitions
 #define COLOR_BLACK                         0x0000
@@ -22,31 +42,11 @@ extern "C" {
 #define DISPLAY_PWIDTH                         240
 #define DISPLAY_PHEIGHT                        320
 
-//extern uint8_t gBMPMask;
-
 void HAL_ScreenInit(void);
 void HAL_ScreenFill(uint8_t, uint8_t, uint8_t);
 void HAL_ScreenWipe(uint8_t R, uint8_t G, uint8_t B);
 void HAL_PutPixel(uint16_t, uint16_t, uint8_t, uint8_t, uint8_t);
 void HAL_BoxWH(uint16_t, uint16_t, uint16_t, uint16_t, uint8_t, uint8_t, uint8_t);
-void HAL_SetRotation(uint8_t);
-void HAL_ScreenRead(uint8_t);
-void HAL_InitPars(uint8_t *, uint8_t);
-void HAL_GetBarInfo(uint8_t, uint8_t);
-void HAL_SaveBarLastVal(uint8_t, uint8_t);
-void HAL_Scroll(uint8_t, uint8_t, uint8_t, uint8_t, signed char, signed char);
-void HAL_StreamWriteStart(uint16_t);
-void HAL_StreamReadStart(uint16_t);
-void HAL_StreamWriteData(uint8_t);
-uint8_t HAL_StreamReadData(void);
-void HAL_StreamStop(uint8_t);
-uint8_t HAL_ReadDataNV(void);
-void HAL_WriteDataINC(uint8_t);
-uint8_t HAL_ReadDataINC(void);
-void HAL_BitmapInitialize(uint16_t, uint16_t, uint16_t, uint16_t);
-void HAL_BitmapPutData(uint8_t);
-void HAL_BitmapTest(void);
-void HAL_BlockTest(void);
 void HAL_DrawChar(uint16_t x, uint16_t y, uint8_t data);
 
 #ifdef __cplusplus
@@ -90,7 +90,7 @@ data will be ignored.
 
 Read continue - 8.2.35 - Command 3Eh
 This is the exact analog to the above command (3C) except for reads and operates in the same way except that
-I would hope that coninuous reads of an area would seem to be useless and extra setting should not be used.
+I would hope that coninuous reads of an area would be useless and extra setting should not be used.
 
 Get Scanline - 8.2.37 - Command 45h
 This command returns the current scan location on the display, but includes all the dead zones around the

@@ -1,3 +1,27 @@
+/*
+ * 
+ *   Copyright (c) 2019 Matrix Orbital, Corp. https://www.matrixorbital.com/
+ *   
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *   
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *   
+ *   
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ *   
+*/
 #include "ArduinoTFT28.h"
 #include "ILI9341_SPI.h"
 
@@ -172,13 +196,6 @@ void ILI9341_Init(void)
   ILI9341_WriteData(0x06);  //
   ILI9341_Deselect();         
 
-  //  MO_ILI_Send(COMMAND,0xB5); //VERTICAL PORCH
-  //  MO_ILI_Send(DATA,0x02);     //
-  //  MO_ILI_Send(DATA,0x02);     //
-  //  MO_ILI_Send(DATA,0x38);     //HORIZONTAL PORCH
-  //  MO_ILI_Send(DATA,0x38);     //
-
-  
   ILI9341_Select();    
   ILI9341_WriteCommand(0xB0);      //Command  "Set Gamma Negative"
   ILI9341_WriteData(0xC0);     //Parameter '0x00"
@@ -193,155 +210,6 @@ void ILI9341_Init(void)
   ILI9341_WriteCommand(0x29); //Set_display_on  
   ILI9341_Deselect();         
   MyDelay(120);
-
-
-//  // display write test RAQUEL ==============
-//  ILI9341_Select();   
-//  ILI9341_WriteCommand(0x2A); 
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x0A);
-//  ILI9341_Deselect();         
-//
-//  ILI9341_Select();   
-//  ILI9341_WriteCommand(0x2B);
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x00);
-//  ILI9341_WriteData(0x0A);
-//  ILI9341_Deselect();         
-//
-//  ILI9341_Select();   
-//  ILI9341_WriteCommand(0x2C);
-//  for (int i = 0; i < 255; i++)
-//  {
-//
-//    ILI9341_WriteData(0xFF);
-//    ILI9341_WriteData(0x00);
-//    ILI9341_WriteData(0xFF);    
-//  }
-//  ILI9341_Deselect();   
-//
-//  ILI9341_Select();   
-//  ILI9341_WriteCommand(0x00); // NOP
-//  ILI9341_Deselect();      
-//  // display write test ==============  
-    
-  
-  /*
-  ILI9341_Reset();
-
-  //software reset
-  ILI9341_WriteCommand(0x01);                                                            // Software reset
-  MyDelay(100);                                                                          // for 100 ms
-
-//  ILI9341_WriteCommand(0x11);
-//  ILI9341_WriteData(0x00);
-
-  ILI9341_Write1Data(0x11, 0x00);                                                        // exit sleep mode
-  MyDelay(100);                                                                          // for 100 ms
-  ILI9341_WriteCommand(0x29);                                                            // display on command
-  ILI9341_WriteCommand(0xCD);                                                                // Power Control A (as per Atmel)
-  ILI9341_WriteData(0x39);
-  ILI9341_WriteData(0x2C);
-  ILI9341_WriteData(0x00);
-  ILI9341_WriteData(0x34);
-  ILI9341_WriteData(0x02);
-
-  ILI9341_WriteCommand(0xCF);                                                                // Power Control B (as per Atmel)
-  ILI9341_WriteData(0x00);                                                                   // 0x00 per Atmel, 0x00 per fabienroyer
-  ILI9341_WriteData(0xAA);                                                                   // 0xAA per Atmel, 0x83 per fabienroyer
-  ILI9341_WriteData(0xB0);                                                                   // 0xB0 per Atmel, 0x30 per fabienroyer
-
-  ILI9341_Write1Data(0xF7, 0x30);                                                        // Charge Pump Ratio Control (0x30 per Atmel, 0x20  per fabienroyer)
-  ILI9341_Write1Data(0xC0, 0x25);                                                        // Power Control 1 (0x26 per Atmel 0x26 per fabienroyer)
-  ILI9341_Write1Data(0xC1, 0x01);                                                        // Power Control 2 (0x11 as per Atmel (stupid))
-  ILI9341_Write2Data(0xC5, 0x5C, 0x4C);                                                  // VCOM control 1 (as per Atmel)
-//  ILI9341_WriteData(0xC7); ILI9341_WriteData(0x94);                                        // VCOM control 2 (as per Atmel)
-  ILI9341_Write1Data(0xC7, 0xBD);                                                        // VCOM control 2
-  ILI9341_Write3Data(0xE8, 0x85, 0x01, 0x78);                                            // Driver Timing Control A (as per Atmel)
-  ILI9341_Write2Data(0xEA, 0x00, 0x00);                                                  // Driver Timing Control B (as per Atmel)
-  ILI9341_Write1Data(0x3A, 0x05);                                                        // pixel format - 05 = 16 bit per pixel, 06 = 18
-  ILI9341_Write1Data(0x36, 0x00);                                                        // memory access control = 40. BGR is 48
-  ILI9341_Write1Data(0x51, 0xFF);                                                        // Set display brightness maximum
-  ILI9341_Write3Data(0xF6, 0x00, 0x30, 0x40);                                            // Interface Control - Zero LSb for Red and Blue in 16 bit mode - Little Endian
-
-  ILI9341_ColorSet(); // Send 128 bytes of data for 16 to 18 bit conversion
-
-
-  /*
-  ILI9341_WriteCommand(0x28);                                                                // display off command
-  ILI9341_WriteCommand(0xC0); ILI9341_WriteData(0x23); //ILI9341_WriteData(0x04);  // power control 1
-  ILI9341_WriteCommand(0xC1); ILI9341_WriteData(0x04);                                  // power control 2
-  ILI9341_WriteCommand(0xC5); ILI9341_WriteData(0x2B); ILI9341_WriteData(0x25);    // VCOM control 1
-  ILI9341_WriteCommand(0xC7); ILI9341_WriteData(0xbd);                                  // VCOM control 2
-  ILI9341_WriteCommand(0x36); ILI9341_WriteData(0x40);                                  // memory access control = 40. BGR is 48
-  ILI9341_WriteCommand(0x3A); ILI9341_WriteData(0x06);                                  // pixel format - 05 = 16 bit per pixel, 06 = 18
-  ILI9341_WriteCommand(0xB1); ILI9341_WriteData(0x00); ILI9341_WriteData(0x1B);    // frame rate control = 1B, was 18
-
-  ILI9341_WriteCommand(0xf2); ILI9341_WriteData(0x00);                                  // 3 Gamma disable **** COMMAND NOT LISTED
-  ILI9341_WriteCommand(0x26); ILI9341_WriteData(0x01);                                  // Gamma set curve 1
-*/
-  /*
-  ILI9341_WriteCommand(0xE0);
-  ILI9341_WriteData(0x0F);                 //positive gamma correction
-  ILI9341_WriteData(0x26);
-  ILI9341_WriteData(0x21);
-  ILI9341_WriteData(0x0B);
-  ILI9341_WriteData(0x0E);
-  ILI9341_WriteData(0x08);
-  ILI9341_WriteData(0x51);
-  ILI9341_WriteData(0x6F);
-  ILI9341_WriteData(0x43);
-  ILI9341_WriteData(0x0D);
-  ILI9341_WriteData(0x1A);
-  ILI9341_WriteData(0x08);
-  ILI9341_WriteData(0x0C);
-  ILI9341_WriteData(0x0A);
-  ILI9341_WriteData(0x00);
-*/
-  /*
-  ILI9341_WriteCommand(0xE1);
-  ILI9341_WriteData(0x00);                 //negative gamma correction
-  ILI9341_WriteData(0x19);
-  ILI9341_WriteData(0x1E);
-  ILI9341_WriteData(0x04);
-  ILI9341_WriteData(0x11);
-  ILI9341_WriteData(0x07);
-  ILI9341_WriteData(0x2E);
-  ILI9341_WriteData(0x09);
-  ILI9341_WriteData(0x3C);
-  ILI9341_WriteData(0x02);
-  ILI9341_WriteData(0x05);
-  ILI9341_WriteData(0x07);
-  ILI9341_WriteData(0x33);
-  ILI9341_WriteData(0x35);
-  ILI9341_WriteData(0x0F);
-*/
-  /*
-  ILI9341_WriteCommand(0x2A);              //start 0x0000
-  ILI9341_WriteData(0x00);                 //column address set
-  ILI9341_WriteData(0x00);                 // ********************************************************************
-  ILI9341_WriteData(0x00);
-  ILI9341_WriteData(0xEF);                 //end 0x00EF
-
-  ILI9341_WriteCommand(0x2B);
-  ILI9341_WriteData(0x00);                 //page address set
-  ILI9341_WriteData(0x00);                 //start 0x0000 ******************************************************************************
-  ILI9341_WriteData(0x01);
-  ILI9341_WriteData(0x3F);                 //end 0x013F
-*/
-//  ILI9341_WriteCommand(0xB7); ILI9341_WriteData(0x07);                                //entry mode set
-//  ILI9341_WriteCommand(0xB6);                                                              //display function control
-//  ILI9341_WriteData(0x0A);
-//  ILI9341_WriteData(0x82);
-//  ILI9341_WriteData(0x27);
-//  ILI9341_WriteData(0x00);
-/*
-  ILI9341_WriteCommand(0x11); ILI9341_WriteData(0x00);  // exit sleep mode
-  ILI9341_WriteCommand(0x29);                                // display on command
-*/
 }
 
 void ILI9341_Reset(void)  // hardware reset
@@ -477,20 +345,8 @@ void ILI9341_ReadDisplayMADCTL(uint8_t *Parm)
   ILI9341_Deselect();
 }
 
-
-
 //                                                           THIS FUNCTION THE SAME AS THE NEXT ONE
 void ILI9341_ReadDisplayImageMode(uint8_t *Parm)
-{
-  ILI9341_Select();
-  SetPin(ILI9341_DC_PIN, 0);     // Indicate COMMAND
-  SPI_Write(0x0D);               // Transmit the command
-  *Parm = SPI_Read();            // Throw away
-  *Parm = SPI_Read();
-  ILI9341_Deselect();
-}
-
-void ILI9341_ReadDisplaySignalMode(uint8_t *Parm)
 {
   ILI9341_Select();
   SetPin(ILI9341_DC_PIN, 0);     // Indicate COMMAND

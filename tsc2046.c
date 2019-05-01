@@ -1,3 +1,25 @@
+/*****************************************************************************
+ *
+ *   Copyright(C) 2011, Embedded Artists AB
+ *   All rights reserved.
+ *
+ ******************************************************************************
+ * Software that is described herein is for illustrative purposes only
+ * which provides customers with programming information regarding the
+ * products. This software is supplied "AS IS" without any warranties.
+ * Embedded Artists AB assumes no responsibility or liability for the
+ * use of the software, conveys no license or title under any patent,
+ * copyright, or mask work right to the product. Embedded Artists AB
+ * reserves the right to make changes in the software without
+ * notification. Embedded Artists AB also make no representation or
+ * warranty that such application will be suitable for the specified
+ * use without further testing or modification.
+ *****************************************************************************/
+
+
+/******************************************************************************
+ * Includes
+ *****************************************************************************/
 #include "touch.h"
 #include "tsc2046.h"
 #include "calibrate.h"
@@ -55,7 +77,6 @@ typedef struct
 } tStoredCalData;
 
 static tStoredCalData storedCalData;
-static tStoredCalData dat;
 static unsigned int calibrated = 0;
 
 static void TSC2046_ChipSelect(void)
@@ -78,9 +99,6 @@ static void TSC2046_PinInit(void)
 
 #define DEBOUNCE_MAX 10
 #define DEBOUNCE_TOL  3
-
-//#define pat1 0x32239081
-//#define pat2 0xabdfadba
 
 static uint16_t spiTransfer(uint8_t cmd)
 {
@@ -253,7 +271,6 @@ void touch_xyz(int32_t* x, int32_t* y, int32_t* z)
 {
   int32_t ix, iy, iz = 0;
   POINT displayPoint, screenSample;
-  uint8_t pwrDown = PWRDOWN;
   
   readAndFilter(&ix, &iy, &iz);
   *z = iz;
@@ -274,7 +291,7 @@ void touch_xyz(int32_t* x, int32_t* y, int32_t* z)
   }   
   if (*z) 
   {
-      Log("                   %d,%d,%d\n",*x,*y,*z);  
+      Log("                   %lu,%lu,%lu\n",*x,*y,*z);  
   }
 }
 
@@ -304,15 +321,12 @@ void touch_calibrate(tTouchPoint ref1, tTouchPoint ref2, tTouchPoint ref3,
                        &storedCalData.storedMatrix);
 
   calibrated = true;
-
 }
-
 
 void touch_reinit(void)
 {
   calibrated = false;
 }
-
 
 void TSC2046_init(uint32_t* initX, uint32_t* initY)
 {     
@@ -324,16 +338,16 @@ void TSC2046_init(uint32_t* initX, uint32_t* initY)
   data[1] = (READ_12BIT_SER(ADS_A2A1A0_vaux) | ADS_PD10_ALL_ON);
   data[2] = PWRDOWN;
    
-  TSC2046_ChipSelect;  
+  TSC2046_ChipSelect();  
   for (int i = 0; i <3; i++)
     SPI_Write(data[i]);
-  TSC2046_ChipDeselect;
+  TSC2046_ChipDeselect();
 
   // dummy read
   *initY = getFilteredValue(READ_Y(0));
   *initX = getFilteredValue(READ_X(0));
-  Log("Y= %d\n",*initY);  
-  Log("X= %d\n",*initX);  
+  Log("Y= %lu\n",*initY);  
+  Log("X= %lu\n",*initX);  
   return;
 }
 
@@ -345,7 +359,6 @@ extern bool touched;
 bool TSC2046_read(void)
 {    
   int32_t x2, y2, z2;
-  static int lastClr=2; // 0-green 1-red 2-white  
   
   touch_xyz(&x2, &y2, &z2);     
   if (z2)
